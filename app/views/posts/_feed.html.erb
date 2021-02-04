@@ -1,8 +1,9 @@
+<% if user_signed_in? %>
 <div class="column is-half">
     <article class="media box">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/64x64.png">
+            <img src="https://bulma.io/images/placeholders/64x64.png">
             </p>
         </figure>
         <div class="media-content">
@@ -10,6 +11,7 @@
         </div>
     </article>
 </div>
+<% end %>
 
 <% @posts.each do | post | %>
     <div class="box">
@@ -19,12 +21,22 @@
                     <img src="https://bulma.io/images/placeholders/64x64.png">
                 </figure>
             </div>
+            <% if user_signed_in? %>
             <div class="media-content">
                 <div class="content">
-                    <strong>Tyler Downie</strong><br />
-                    <small>@gmail</small><br/>
+                    <strong><%= post.user.name %></strong><br />
+                    <small><%= post.user.username %></small><br/>
                     <p><%= post.post %></p>
                 </div>
+            <% else %>
+            <div class="media-content">
+                <div class="content">
+                    <strong>Anonymous</strong><br />
+                    <small>none</small><br/>
+                    <p><%= post.post %></p>
+                </div>
+            <% end %>
+                <% if user_signed_in? %>
                 <nav class="level">
                     <div class="level-left is-mobile">
                         <%= link_to post, class: "level-item" do %>
@@ -38,7 +50,9 @@
                         <% end %>
                     </div>
                 </nav>
+                <% end %>
             </div>
         </article>
     </div>
 <% end %>
+
